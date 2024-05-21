@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  nginx:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - static_volume:/app/backend/server/django_static/ # change to django static files
+      - static_image:/app/backend/server/media # change to django media files
+      - ./docker/nginx/certbot/conf:/etc/letsencrypt
+      - ./docker/nginx/certbot/www:/var/www/certbot
+
+
+volumes:
+  static_volume: {}
+  static_image: {}
+  postgres_data:
